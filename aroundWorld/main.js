@@ -1,6 +1,7 @@
 //https://www.clicktime.com/ctc/devintern.html
 var starts = [];
 var stops = [];
+var state = "start";
 function geoFindMe() {
     var output = document.getElementById("out");
   
@@ -29,7 +30,7 @@ function geoFindMe() {
     navigator.geolocation.getCurrentPosition(success, error);
   }
 
-
+//depreciating
 function setTime(state)
 {
     var d = new Date();
@@ -67,6 +68,31 @@ function setTime(state)
 
     }
     // alert(state+" "+d.toTimeString());
+}
+
+function fsSetTime()
+{
+    var d = new Date();
+    if(state=="start")
+    {
+        starts.push(d);
+        state="stop";
+        alert("started timer");
+    }
+    else
+    {
+        stops.push(d);
+        state="start";
+        alert("stoped timer");
+        localStorage.setItem("start",JSON.stringify(starts));
+        localStorage.setItem("stop",JSON.stringify(stops));
+
+    }
+}
+
+function fsStop()
+{
+    
 }
 
 function getTime()
