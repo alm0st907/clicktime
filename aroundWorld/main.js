@@ -11,6 +11,10 @@ function geoFindMe() {
       var longitude = position.coords.longitude;
   
       output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+
+    //testing local storage
+      localStorage.setItem("lat",latitude);
+      localStorage.setItem("lon",longitude);
     }
   
     function error() {
@@ -21,4 +25,12 @@ function geoFindMe() {
   
     navigator.geolocation.getCurrentPosition(success, error);
   }
-  L
+
+function getLocal()
+{
+    var output = document.getElementById("myout");
+
+    var lat = localStorage.getItem("lat");
+    var lon = localStorage.getItem("lon");
+    output.innerHTML = '<p>Latitude is ' + lat + '° <br>Longitude is ' +lon+ '°</p>';
+}
