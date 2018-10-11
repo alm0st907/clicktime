@@ -90,10 +90,15 @@ function genTable()
     var row = table.insertRow(0);
     var c1 = row.insertCell(0);
     var c2 = row.insertCell(1);
+    var c3 = row.insertCell(2);
+    var c4 = row.insertCell(3);
+
     var lat = localStorage.getItem("lat");
     var lon = localStorage.getItem("lon");
     c1.innerHTML = lat.toString();
     c2.innerHTML = lon.toString();
+    c3.innerHTML = starts[(starts.length)-1];
+    c4.innerHTML = stops[(starts.length)-1];
 }
 
 function delRow() {
