@@ -1,3 +1,4 @@
+//https://www.clicktime.com/ctc/devintern.html
 var starts = [];
 var stops = [];
 function geoFindMe() {
@@ -36,7 +37,11 @@ function setTime(state)
     {
         var ret = localStorage.getItem("start");
         alert(ret);
-        starts = JSON.parse(ret);
+        if(ret!=undefined)
+        {
+            starts = JSON.parse(ret);
+        }
+        else starts.push(d);
         alert("starts is currently" + starts.toString());
     }
     else
@@ -60,6 +65,14 @@ function setTime(state)
 function getTime()
 {
     alert("Start time was "+localStorage.getItem("start")+"\n"+"End time was "+localStorage.getItem("stop"));
+}
+
+function clrTime()
+{
+    starts=[];
+    stops=[];
+    localStorage.clear();
+    alert("Local storage cleared");
 }
 function getLocal()
 {
