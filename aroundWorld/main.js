@@ -26,7 +26,7 @@ function geoFindMe() {
     }
   
     output.innerHTML = "<p>Locating…</p>";
-  
+    
     navigator.geolocation.getCurrentPosition(success, error);
   }
 
@@ -76,12 +76,14 @@ function fsSetTime()
     if(state=="start")
     {
         starts.push(d);
+        genTable(state);
         state="stop";
         // alert("started timer");
     }
     else
     {
         stops.push(d);
+        genTable(state);
         state="start";
         // alert("stoped timer");
         localStorage.setItem("start",JSON.stringify(starts));
@@ -124,28 +126,34 @@ function getRows()
     return totalRowCount;
 }
 
-function genTable()
+function genTable(state)
 {
     var table = document.getElementById("myTable");
     var pos = getRows();
-    var row = table.insertRow(pos);
-    var c1 = row.insertCell(0);
-    var c2 = row.insertCell(1);
-    var c3 = row.insertCell(2);
-    var c4 = row.insertCell(3);
-
     var lat = localStorage.getItem("lat");
     var lon = localStorage.getItem("lon");
-    c1.innerHTML = lat.toString();
-    c1.setAttribute("class","timeEnt");
-    c2.innerHTML = lon.toString();
-    c2.setAttribute("class","timeEnt");
+    if(state == "start")
+    {
+        var row = table.insertRow(pos);
+        var c1 = row.insertCell(0);
+        var c2 = row.insertCell(1);
+        c1.innerHTML = "Lt "+lat.toString()+"<br>Ln "+lon.toString();
+        c1.setAttribute("class","timeEnt");
+        c2.innerHTML = starts[(starts.length)-1];
+        c2.setAttribute("class","timeEnt");
+    }
+    else
+    {
+        var row = table.rows[pos-1];
+        var c3 = row.insertCell(2);
+        var c4 = row.insertCell(3);
+        c3.innerHTML = "N/A";
+        c3.setAttribute("class","timeEnt");
+        c4.innerHTML = stops[(stops.length)-1];
+        c4.setAttribute("class","timeEnt");
+    }
 
-    c3.innerHTML = starts[(starts.length)-1];
-    c3.setAttribute("class","timeEnt");
 
-    c4.innerHTML = stops[(stops.length)-1];
-    c4.setAttribute("class","timeEnt");
 
 }
 
