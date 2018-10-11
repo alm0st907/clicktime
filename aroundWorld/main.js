@@ -44,15 +44,22 @@ function setTime(state)
         else starts.push(d);
         alert("starts is currently" + starts.toString());
     }
-    else
+    
+    if(starts.length>=1&&state=="start")
     {
         starts.push(d);
-        alert("pushed");
+        alert("pushed start");
+    }
+    else
+    {
+        stops.push(d);
+        alert("pushed stop");
     }
 
     if(state=="stop")
     {
         localStorage.setItem("start",JSON.stringify(starts));
+        localStorage.setItem("stop",JSON.stringify(stops));
         alert(JSON.stringify(starts));
         alert("saved");
         console.log(starts);
@@ -98,7 +105,7 @@ function genTable()
     c1.innerHTML = lat.toString();
     c2.innerHTML = lon.toString();
     c3.innerHTML = starts[(starts.length)-1];
-    c4.innerHTML = stops[(starts.length)-1];
+    c4.innerHTML = stops[(stops.length)-1];
 }
 
 function delRow() {
