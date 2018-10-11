@@ -1,3 +1,5 @@
+var starts = [];
+var stops = [];
 function geoFindMe() {
     var output = document.getElementById("out");
   
@@ -26,6 +28,39 @@ function geoFindMe() {
     navigator.geolocation.getCurrentPosition(success, error);
   }
 
+
+function setTime(state)
+{
+    var d = new Date();
+    if(starts.length<1||starts==undefined)
+    {
+        var ret = localStorage.getItem("start");
+        alert(ret);
+        starts = JSON.parse(ret);
+        alert("starts is currently" + starts.toString());
+    }
+    else
+    {
+        starts.push(d);
+        alert("pushed");
+    }
+
+    if(state=="stop")
+    {
+        localStorage.setItem("start",JSON.stringify(starts));
+        alert(JSON.stringify(starts));
+        alert("saved");
+        console.log(starts);
+        alert(starts.toString());
+
+    }
+    // alert(state+" "+d.toTimeString());
+}
+
+function getTime()
+{
+    alert("Start time was "+localStorage.getItem("start")+"\n"+"End time was "+localStorage.getItem("stop"));
+}
 function getLocal()
 {
     var output = document.getElementById("myout");
