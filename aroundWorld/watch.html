@@ -6,29 +6,33 @@
     <script src="main.js"></script>
     <script src="jquery-3.3.1.min.js"></script>
 
+<!-- 
 
+    test code here
+         <p><button onclick="setTime('stop')">Stop</button></p>
+    <p><button onclick="getTime()">See Time</button></p> -->
+     <!-- <p><button onclick="delRow()">Clear a row</button></p> -->
+    <!-- <p><button onclick="getLocal()">Check storage</button></p> 
+ -->
 
 </head>
 <body>
     <p><button onclick="geoFindMe()">Show my location</button></p>
-    <p><button onclick="getLocal()">Check storage</button></p>
-    <p><button onclick="fsSetTime()">Start/Stop</button></p>
-    <p><button onclick="setTime('stop')">Stop</button></p>
-    <p><button onclick="getTime()">See Time</button></p>
-    <p><button onclick="clrTime()">Clear Time</button></p>
     <div id="out"></div>
-    <div id="myout"></div>
+    <p><button onclick="fsSetTime()">Start/Stop</button></p>
     <p><button onclick="genTable()">Table Time</button></p>
 
-    <table id = "myTable">
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+    <table id = "myTable" width = 100%>
+        <tr id="init">
+            <td>Latitude</td>
+            <td>Longitude</td>
+            <td>Start Time</td>
+            <td>End Time</td>
         </tr>
     </table>
-    <p><button onclick="delRow()">Clear a row</button></p>
+    <p><button onclick="clrTime()">Clear Data/Table</button></p>  
+
+   
 
 </body>
 </html>

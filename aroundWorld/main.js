@@ -77,13 +77,13 @@ function fsSetTime()
     {
         starts.push(d);
         state="stop";
-        alert("started timer");
+        // alert("started timer");
     }
     else
     {
         stops.push(d);
         state="start";
-        alert("stoped timer");
+        // alert("stoped timer");
         localStorage.setItem("start",JSON.stringify(starts));
         localStorage.setItem("stop",JSON.stringify(stops));
 
@@ -105,6 +105,7 @@ function clrTime()
     starts=[];
     stops=[];
     localStorage.clear();
+    delRow();
     alert("Local storage cleared");
 }
 function getLocal()
@@ -117,10 +118,17 @@ function getLocal()
 
 }
 
+function getRows()
+{
+    var totalRowCount = $("#myTable tr").length;
+    return totalRowCount;
+}
+
 function genTable()
 {
     var table = document.getElementById("myTable");
-    var row = table.insertRow(0);
+    var pos = getRows();
+    var row = table.insertRow(pos);
     var c1 = row.insertCell(0);
     var c2 = row.insertCell(1);
     var c3 = row.insertCell(2);
@@ -129,11 +137,18 @@ function genTable()
     var lat = localStorage.getItem("lat");
     var lon = localStorage.getItem("lon");
     c1.innerHTML = lat.toString();
+    c1.setAttribute("class","timeEnt");
     c2.innerHTML = lon.toString();
+    c2.setAttribute("class","timeEnt");
+
     c3.innerHTML = starts[(starts.length)-1];
+    c3.setAttribute("class","timeEnt");
+
     c4.innerHTML = stops[(stops.length)-1];
+    c4.setAttribute("class","timeEnt");
+
 }
 
 function delRow() {
-    $("#myTable tr").remove();
+    $(".timeEnt").remove();
 }
