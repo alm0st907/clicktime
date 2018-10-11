@@ -2,6 +2,9 @@
 var starts = [];
 var stops = [];
 var state = "start";
+window.onload = tableRebuild();
+window.onbeforeunload = saveOnClose();
+
 function geoFindMe() {
     var output = document.getElementById("out");
   
@@ -76,6 +79,7 @@ function fsSetTime()
     if(state=="start")
     {
         starts.push(d);
+        geoFindMe();
         genTable(state);
         state="stop";
         // alert("started timer");
@@ -83,12 +87,10 @@ function fsSetTime()
     else
     {
         stops.push(d);
+        geoFindMe();
         genTable(state);
         state="start";
         // alert("stoped timer");
-        localStorage.setItem("start",JSON.stringify(starts));
-        localStorage.setItem("stop",JSON.stringify(stops));
-
     }
 }
 
@@ -160,3 +162,42 @@ function genTable(state)
 function delRow() {
     $(".timeEnt").remove();
 }
+
+//TODO finish so that if data is loaded, rebuild table with said data
+function tableRebuild()
+{  
+    alert("this is called onload");
+
+    var startTreload = localStorage.getItem("start");
+    var stopTreload= localStorage.getItem("stop");
+
+    if(startTreload != undefined)
+    {
+        starts=JSON.parse(startTreload);
+        alert("Start Times reloaded");
+    }
+    else
+    {
+        alert("no start times to reload");
+    }
+    if(stopTreload != undefined)
+    {
+        stops = JSON.parse(stopTreload);
+        alert("Stop Times reloaded");
+    }
+    else
+    {
+        alert("no stop times to reload");
+
+    }
+
+}
+
+//saves to local storage on close
+function saveOnClose()
+{
+    localStorage.setItem("start",JSON.stringify(starts));
+    localStorage.setItem("stop",JSON.stringify(stops));
+}
+
+
