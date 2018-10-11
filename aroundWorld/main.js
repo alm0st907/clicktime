@@ -95,3 +95,7 @@ function genTable()
     c1.innerHTML = lat.toString();
     c2.innerHTML = lon.toString();
 }
+
+function delRow() {
+    $("#myTable tr").remove();
+}
