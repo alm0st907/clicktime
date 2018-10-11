@@ -161,6 +161,7 @@ function genTable(state)
 
 function delRow() {
     $(".timeEnt").remove();
+    state="start";
 }
 
 //TODO finish so that if data is loaded, rebuild table with said data
@@ -200,4 +201,31 @@ function saveOnClose()
     localStorage.setItem("stop",JSON.stringify(stops));
 }
 
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition,showError);
+    } else { 
+        alert("location services are not supported on this browser");
+    }
+}
 
+function showPosition(position) {
+    console.log(position.coords.latitude + "," + (position.coords.longitude));  
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            console.log("User denied the request for Geolocation.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            console.log("Location Unavailable");
+            break;
+        case error.TIMEOUT:
+            console.log("Timeout Error");
+            break;
+        case error.UNKNOWN_ERROR:
+            console.log("Unknown Error");
+            break;
+    }
+}
