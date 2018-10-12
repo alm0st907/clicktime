@@ -212,40 +212,28 @@ function tableRebuild()
     if(startTreload != undefined)
     {
         starts=JSON.parse(startTreload);
-        alert("Start Times reloaded");
-    }
-    else
-    {
-        alert("no start times to reload");
+        // alert("Start Times reloaded");
     }
     if(stopTreload != undefined)
     {
         stops = JSON.parse(stopTreload);
-        alert("Stop Times reloaded");
-    }
-    else
-    {
-        alert("no stop times to reload");
-
+        // alert("Stop Times reloaded");
     }
     if(latReload != undefined)
     {
         lats = JSON.parse(latReload);
-        alert("lats reloaded");
-    }
-    else
-    {
-        alert("no lats");
+        // alert("lats reloaded");
     }
     if(lonReload != undefined)
     {
         lons = JSON.parse(lonReload);
-        alert("lons reloaded");
+        // alert("lons reloaded");
 
     }
-    else
+
+    if(lats==[]||lons==[]||starts==[]||stops==[])
     {
-        alert("no lons");
+        alert("Incomplete data save. Resetting Table");
     }
     //if we have no positional data, poll for intial data to get permission, then clear the data to remove any bad data
 }
