@@ -5,8 +5,20 @@ var lats = [];
 var lons = [];
 var deltas = [];
 var state = "start";
-window.onload = tableRebuild();
-window.onbeforeunload = saveOnClose();
+
+
+$(document).ready(function(){
+    // your code
+    tableRebuild();
+    });
+
+window.onbeforeunload = function(event) {
+    // do something
+    saveOnClose();
+};
+
+// document.onload = tableRebuild();
+// window.onbeforeunload = saveOnClose();
 
 
 function geoFindMe() {
@@ -284,6 +296,10 @@ function tableRebuild()
     if(lats==[]||lons==[]||starts==[]||stops==[]||deltas==[])
     {
         alert("Incomplete data save. Resetting Table");
+    }
+    else
+    {
+        rebuildStart();
     }
 
     //if we have no positional data, poll for intial data to get permission, then clear the data to remove any bad data
