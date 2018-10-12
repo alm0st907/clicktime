@@ -3,11 +3,8 @@ var starts = [];
 var stops = [];
 var lats = [];
 var lons = [];
-
-
 var state = "start";
 window.onload = tableRebuild();
-window.onload = geoFindMe();
 window.onbeforeunload = saveOnClose();
 
 
@@ -197,7 +194,6 @@ function delRow() {
 //TODO finish so that if data is loaded, rebuild table with said data
 function tableRebuild()
 {  
-å
     var startTreload = localStorage.getItem("start");
     var stopTreload= localStorage.getItem("stop");
     var latReload = localStorage.getItem("lats");
