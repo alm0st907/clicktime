@@ -1,9 +1,14 @@
 //https://www.clicktime.com/ctc/devintern.html
 var starts = [];
 var stops = [];
+var lats = [];
+var lons = [];
+
+
 var state = "start";
 window.onload = tableRebuild();
 window.onbeforeunload = saveOnClose();
+
 
 function geoFindMe() {
     var output = document.getElementById("out");
@@ -18,10 +23,12 @@ function geoFindMe() {
       var longitude = position.coords.longitude;
   
       output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
-
+    
+      lats.push(latitude);
+      lons.push(longitude);
     //testing local storage
-      localStorage.setItem("lat",latitude);
-      localStorage.setItem("lon",longitude);
+    //   localStorage.setItem("lat",latitude);
+    //   localStorage.setItem("lon",longitude);
     }
   
     function error() {
@@ -134,16 +141,16 @@ function genTable(state)
 {
     var table = document.getElementById("myTable");
     var pos = getRows();
-    var lat = localStorage.getItem("lat");
-    var lon = localStorage.getItem("lon");
+    var lat = lats[lats.length-1];
+    var lon = lons[lons.length-1];
 
     if(state == "start")
     {
         if(lat==undefined || lon == undefined)
         {
             alert("lat/lon not found");
-            state="start";
-            return;
+            lat = "Not found";
+            lon = "Not found";
         }
         var row = table.insertRow(pos);
         var c1 = row.insertCell(0);
@@ -160,7 +167,7 @@ function genTable(state)
         var row = table.rows[pos-1];
         var c3 = row.insertCell(2);
         var c4 = row.insertCell(3);
-        c3.innerHTML = "N/A";
+        c3.innerHTML = "Lt "+lat.toString()+"<br>Ln "+lon.toString();
         c3.setAttribute("class","timeEnt");
         c4.innerHTML = stops[(stops.length)-1];
         c4.setAttribute("class","timeEnt");
@@ -187,6 +194,8 @@ function tableRebuild()
 
     var startTreload = localStorage.getItem("start");
     var stopTreload= localStorage.getItem("stop");
+    var latReload = localStorage.getItem("lats");
+    var lonReload = localStorage.getItem("lons");
 
     if(startTreload != undefined)
     {
@@ -207,7 +216,26 @@ function tableRebuild()
         alert("no stop times to reload");
 
     }
+    if(latReload != undefined)
+    {
+        lats = JSON.parse(latReload);
+        alert("lats reloaded");
+    }
+    else
+    {
+        alert("no lats");
+    }
+    if(lonReload != undefined)
+    {
+        lons = JSON.parse(lonReload);
+        alert("lons reloaded");
 
+    }
+    else
+    {
+        alert("no lons");
+    }
+    
 }
 
 //saves to local storage on close
@@ -215,6 +243,8 @@ function saveOnClose()
 {
     localStorage.setItem("start",JSON.stringify(starts));
     localStorage.setItem("stop",JSON.stringify(stops));
+    localStorage.setItem("lons",JSON.stringify(lons));
+    localStorage.setItem("lats",JSON.stringify(lats));
 }
 
 function getLocation() {
