@@ -152,8 +152,10 @@ function genTable(state)
             alert("lat/lon not found");
             lat = "Not found";
             lon = "Not found";
+            lats.push(lat);
+            lons.push(lon);
         }
-        var row = table.insertRow(pos);
+        var row = table.insertRow(1);
         var c1 = row.insertCell(0);
         var c2 = row.insertCell(1);
 
@@ -172,8 +174,10 @@ function genTable(state)
             alert("lat/lon not found");
             lat = "Not found";
             lon = "Not found";
+            lats.push(lat);
+            lons.push(lon);
         }
-        var row = table.rows[pos-1];
+        var row = table.rows[1];
         var c3 = row.insertCell(2);
         var c4 = row.insertCell(3);
         var c5 = row.insertCell(4);
@@ -191,9 +195,48 @@ function genTable(state)
     {
         alert("error case");
     }
+}
 
+function rebuildStart()
+{
+    var table = document.getElementById("myTable");
+    for(i=0;i<starts.length;i++)
+    {
+        var lat = lats[i];
+        var lon = lons[i];
+        var row = table.insertRow(1);
+        var c1 = row.insertCell(0);
+        var c2 = row.insertCell(1);
 
-
+        c1.innerHTML = "Lt "+lat.toString()+"<br>Ln "+lon.toString();
+        c1.setAttribute("class","timeEnt");
+        var rawTime = starts[i];
+        var readTime = new Date(rawTime).toTimeString();
+        c2.innerHTML = readTime;
+        c2.setAttribute("class","timeEnt");
+        if(stops[i]!=undefined)
+        {
+            lat = lats[i+1];
+            lon = lons[i+1];
+            rawTime = stops[i];
+            readTime = new Date(rawTime).toTimeString();
+            var delta = deltas[i];
+            var c3 = row.insertCell(2);
+            var c4 = row.insertCell(3);
+            var c5 = row.insertCell(4);
+            c3.innerHTML = "Lt "+lat.toString()+"<br>Ln "+lon.toString();
+            c3.setAttribute("class","timeEnt");
+            c4.innerHTML = readTime;
+            c4.setAttribute("class","timeEnt");
+            c5.setAttribute("class","timeEnt");
+            c5.innerHTML = delta;
+        }
+        else
+        {
+            state= "stop";
+        }
+    }
+    return;
 }
 
 function delTable() {
@@ -208,6 +251,7 @@ function tableRebuild()
     var stopTreload= localStorage.getItem("stop");
     var latReload = localStorage.getItem("lats");
     var lonReload = localStorage.getItem("lons");
+    var deltaReload = localStorage.getItem("deltas");
 
     if(startTreload != undefined)
     {
@@ -230,11 +274,18 @@ function tableRebuild()
         // alert("lons reloaded");
 
     }
+    if(deltaReload != undefined)
+    {
+        deltas = JSON.parse(deltaReload);
+        // alert("deltas reloaded");
+    }
+    
 
-    if(lats==[]||lons==[]||starts==[]||stops==[])
+    if(lats==[]||lons==[]||starts==[]||stops==[]||deltas==[])
     {
         alert("Incomplete data save. Resetting Table");
     }
+
     //if we have no positional data, poll for intial data to get permission, then clear the data to remove any bad data
 }
 
@@ -246,6 +297,7 @@ function saveOnClose()
     localStorage.setItem("stop",JSON.stringify(stops));
     localStorage.setItem("lons",JSON.stringify(lons));
     localStorage.setItem("lats",JSON.stringify(lats));
+    localStorage.setItem("deltas",JSON.stringify(deltas));
     alert("Data is saved locally");
 }
 
