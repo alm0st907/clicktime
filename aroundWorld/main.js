@@ -3,6 +3,7 @@ var starts = [];
 var stops = [];
 var lats = [];
 var lons = [];
+var deltas = [];
 var state = "start";
 window.onload = tableRebuild();
 window.onbeforeunload = saveOnClose();
@@ -81,6 +82,9 @@ function setTime(state)
 function fsSetTime()
 {
     var d = new Date();
+    d= d.getTime();
+    
+    
     if(state=="start")
     {
         starts.push(d);
@@ -92,16 +96,50 @@ function fsSetTime()
     else
     {
         stops.push(d);
+        getTdelta();
         setTimeout(geoFindMe(),1000);
         genTable(state);
         state="start";
+        
         // alert("stoped timer");
     }
 }
 
-function fsStop()
+function parseMillisecondsIntoReadableTime(milliseconds){
+    //Get hours from milliseconds
+    var hours = milliseconds / (1000*60*60);
+    var absoluteHours = Math.floor(hours);
+    var h = absoluteHours > 9 ? absoluteHours : '0' + absoluteHours;
+  
+    //Get remainder from hours and convert to minutes
+    var minutes = (hours - absoluteHours) * 60;
+    var absoluteMinutes = Math.floor(minutes);
+    var m = absoluteMinutes > 9 ? absoluteMinutes : '0' +  absoluteMinutes;
+  
+    //Get remainder from minutes and convert to seconds
+    var seconds = (minutes - absoluteMinutes) * 60;
+    var absoluteSeconds = Math.floor(seconds);
+    var s = absoluteSeconds > 9 ? absoluteSeconds : '0' + absoluteSeconds;
+  
+  
+    return h + ':' + m + ':' + s;
+}
+
+function getTdelta()
 {
-    
+    if(stops.length==starts.length)
+    {
+        var t1 = starts[starts.length-1];
+        var t2 = stops[stops.length-1];
+        deltas.push(parseMillisecondsIntoReadableTime(t2-t1));
+        // console.log(t2-t1);
+        // console.log(d1);
+        // console.log(d2);
+        console.log(parseMillisecondsIntoReadableTime(t2-t1));
+
+    }
+
+
 }
 
 function getTime()
@@ -162,7 +200,9 @@ function genTable(state)
 
         c1.innerHTML = "Lt "+lat.toString()+"<br>Ln "+lon.toString();
         c1.setAttribute("class","timeEnt");
-        c2.innerHTML = starts[(starts.length)-1];
+        var rawTime = starts[starts.length-1];
+        var readTime = new Date(rawTime).toUTCString();
+        c2.innerHTML = readTime;
         c2.setAttribute("class","timeEnt");
         return;
     }
@@ -171,10 +211,15 @@ function genTable(state)
         var row = table.rows[pos-1];
         var c3 = row.insertCell(2);
         var c4 = row.insertCell(3);
+        var c5 = row.insertCell(4);
         c3.innerHTML = "Lt "+lat.toString()+"<br>Ln "+lon.toString();
         c3.setAttribute("class","timeEnt");
-        c4.innerHTML = stops[(stops.length)-1];
+        var rawTime = stops[(stops.length)-1];
+        var readTime = new Date(rawTime).toUTCString();
+        c4.innerHTML = readTime;
         c4.setAttribute("class","timeEnt");
+        c5.setAttribute("class","timeEnt");
+        c5.innerHTML = deltas[deltas.length-1];
         return;
     }
     else
