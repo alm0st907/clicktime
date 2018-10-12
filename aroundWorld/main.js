@@ -7,6 +7,7 @@ var lons = [];
 
 var state = "start";
 window.onload = tableRebuild();
+window.onload = geoFindMe();
 window.onbeforeunload = saveOnClose();
 
 
@@ -86,7 +87,7 @@ function fsSetTime()
     if(state=="start")
     {
         starts.push(d);
-        geoFindMe();
+        setTimeout(geoFindMe(),1000);
         genTable(state);
         state="stop";
         // alert("started timer");
@@ -94,7 +95,7 @@ function fsSetTime()
     else
     {
         stops.push(d);
-        geoFindMe();
+        setTimeout(geoFindMe(),1000);
         genTable(state);
         state="start";
         // alert("stoped timer");
@@ -141,11 +142,17 @@ function genTable(state)
 {
     var table = document.getElementById("myTable");
     var pos = getRows();
+
+    //before genTable is called, we try to update position and push to arrays
+    //if there is no position to be found, we use last known, otherwise use the next statement
+    //next statement will just set it to not found
     var lat = lats[lats.length-1];
     var lon = lons[lons.length-1];
 
     if(state == "start")
     {
+        //if our coordinates arent defined, just set them as NA
+        //this handles if we lose internet connection or some other error
         if(lat==undefined || lon == undefined)
         {
             alert("lat/lon not found");
@@ -190,8 +197,7 @@ function delRow() {
 //TODO finish so that if data is loaded, rebuild table with said data
 function tableRebuild()
 {  
-    alert("this is called onload");
-
+å
     var startTreload = localStorage.getItem("start");
     var stopTreload= localStorage.getItem("stop");
     var latReload = localStorage.getItem("lats");
@@ -235,16 +241,18 @@ function tableRebuild()
     {
         alert("no lons");
     }
-    
+    //if we have no positional data, poll for intial data to get permission, then clear the data to remove any bad data
 }
 
 //saves to local storage on close
+//sometimes this doesnt work as expected, so i added a manual save button in the html to make the user feel responsible for saving their data
 function saveOnClose()
 {
     localStorage.setItem("start",JSON.stringify(starts));
     localStorage.setItem("stop",JSON.stringify(stops));
     localStorage.setItem("lons",JSON.stringify(lons));
     localStorage.setItem("lats",JSON.stringify(lats));
+    alert("Data is saved locally");
 }
 
 function getLocation() {
