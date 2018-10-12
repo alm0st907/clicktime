@@ -31,7 +31,7 @@ function geoFindMe() {
     }
   
     function error() {
-      output.innerHTML = "Unable to retrieve your location";
+      output.innerHTML = "Unable to retrieve your location. Start/Stop Position will contain last known location if one is available.";
     }
   
     output.innerHTML = "<p>Locating…</p>";
@@ -167,6 +167,12 @@ function genTable(state)
     }
     else if(state=="stop")
     {
+        if(lat==undefined || lon == undefined)
+        {
+            alert("lat/lon not found");
+            lat = "Not found";
+            lon = "Not found";
+        }
         var row = table.rows[pos-1];
         var c3 = row.insertCell(2);
         var c4 = row.insertCell(3);
