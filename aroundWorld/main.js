@@ -128,6 +128,8 @@ function getRows()
     return totalRowCount;
 }
 
+//TODO Fix position buffer to write for start and end
+//TODO fix position buffer so that I dont read null on table clear which creates errors
 function genTable(state)
 {
     var table = document.getElementById("myTable");
