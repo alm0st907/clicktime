@@ -134,17 +134,26 @@ function genTable(state)
     var pos = getRows();
     var lat = localStorage.getItem("lat");
     var lon = localStorage.getItem("lon");
+
     if(state == "start")
     {
+        if(lat==undefined || lon == undefined)
+        {
+            alert("lat/lon not found");
+            state="start";
+            return;
+        }
         var row = table.insertRow(pos);
         var c1 = row.insertCell(0);
         var c2 = row.insertCell(1);
+
         c1.innerHTML = "Lt "+lat.toString()+"<br>Ln "+lon.toString();
         c1.setAttribute("class","timeEnt");
         c2.innerHTML = starts[(starts.length)-1];
         c2.setAttribute("class","timeEnt");
+        return;
     }
-    else
+    else if(state=="stop")
     {
         var row = table.rows[pos-1];
         var c3 = row.insertCell(2);
@@ -153,6 +162,11 @@ function genTable(state)
         c3.setAttribute("class","timeEnt");
         c4.innerHTML = stops[(stops.length)-1];
         c4.setAttribute("class","timeEnt");
+        return;
+    }
+    else
+    {
+        alert("error case");
     }
 
 
