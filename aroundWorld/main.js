@@ -39,46 +39,6 @@ function geoFindMe() {
     navigator.geolocation.getCurrentPosition(success, error);
   }
 
-//depreciating
-function setTime(state)
-{
-    var d = new Date();
-    if(starts.length<1||starts==undefined)
-    {
-        var ret = localStorage.getItem("start");
-        alert(ret);
-        if(ret!=undefined)
-        {
-            starts = JSON.parse(ret);
-        }
-        else starts.push(d);
-        alert("starts is currently" + starts.toString());
-    }
-    
-    if(starts.length>=1&&state=="start")
-    {
-        starts.push(d);
-        alert("pushed start");
-    }
-    else
-    {
-        stops.push(d);
-        alert("pushed stop");
-    }
-
-    if(state=="stop")
-    {
-        localStorage.setItem("start",JSON.stringify(starts));
-        localStorage.setItem("stop",JSON.stringify(stops));
-        alert(JSON.stringify(starts));
-        alert("saved");
-        console.log(starts);
-        alert(starts.toString());
-
-    }
-    // alert(state+" "+d.toTimeString());
-}
-
 function fsSetTime()
 {
     var d = new Date();
@@ -142,17 +102,16 @@ function getTdelta()
 
 }
 
-function getTime()
-{
-    alert("Start time was "+localStorage.getItem("start")+"\n"+"End time was "+localStorage.getItem("stop"));
-}
 
 function clrTime()
 {
     starts=[];
     stops=[];
+    lats=[];
+    lons=[];
+    deltas=[];
     localStorage.clear();
-    delRow();
+    delTable();
     alert("Local storage cleared");
 }
 function getLocal()
@@ -201,7 +160,7 @@ function genTable(state)
         c1.innerHTML = "Lt "+lat.toString()+"<br>Ln "+lon.toString();
         c1.setAttribute("class","timeEnt");
         var rawTime = starts[starts.length-1];
-        var readTime = new Date(rawTime).toUTCString();
+        var readTime = new Date(rawTime).toTimeString();
         c2.innerHTML = readTime;
         c2.setAttribute("class","timeEnt");
         return;
@@ -215,7 +174,7 @@ function genTable(state)
         c3.innerHTML = "Lt "+lat.toString()+"<br>Ln "+lon.toString();
         c3.setAttribute("class","timeEnt");
         var rawTime = stops[(stops.length)-1];
-        var readTime = new Date(rawTime).toUTCString();
+        var readTime = new Date(rawTime).toTimeString();
         c4.innerHTML = readTime;
         c4.setAttribute("class","timeEnt");
         c5.setAttribute("class","timeEnt");
@@ -231,7 +190,7 @@ function genTable(state)
 
 }
 
-function delRow() {
+function delTable() {
     $(".timeEnt").remove();
     state="start";
 }
