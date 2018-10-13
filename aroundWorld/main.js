@@ -98,7 +98,7 @@ function geoFindMe() {
         var latitude = position.coords.latitude;
         var longitude = position.coords.longitude;
 
-        output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+        output.innerHTML = '<p>Current Location</p><p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
 
         lats.push(latitude);
         lons.push(longitude);
@@ -227,7 +227,7 @@ function genTable(state) {
         var rawTime = starts[starts.length - 1];
         var readTime = new Date(rawTime).toTimeString();
 
-        c1.innerHTML = "Lt " + lat.toString() + "<br>Ln " + lon.toString();
+        c1.innerHTML = "Lt " + lat.toString() + "<br>Ln " + lon.toString()+'<br>';
         c1.setAttribute("class", "timeEnt");
         c2.innerHTML = readTime;
         c2.setAttribute("class", "timeEnt");
@@ -240,7 +240,7 @@ function genTable(state) {
         var c5 = row.insertCell(4);
         var rawTime = stops[(stops.length) - 1];
         var readTime = new Date(rawTime).toTimeString();
-        c3.innerHTML = "Lt " + lat.toString() + "<br>Ln " + lon.toString();
+        c3.innerHTML = "Lt " + lat.toString() + "<br>Ln " + lon.toString()+'<br>';
         c3.setAttribute("class", "timeEnt");
         c4.innerHTML = readTime;
         c4.setAttribute("class", "timeEnt");
@@ -266,7 +266,7 @@ function tableReloader() {
         var rawTime = starts[i];
         var readTime = new Date(rawTime).toTimeString();
 
-        c1.innerHTML = "Lt " + lat.toString() + "<br>Ln " + lon.toString();
+        c1.innerHTML = "Lt " + lat.toString() + "<br>Ln " + lon.toString()+'<br>';
         c1.setAttribute("class", "timeEnt");
 
         c2.innerHTML = readTime;
@@ -280,7 +280,7 @@ function tableReloader() {
             lon = lons[i + 1];
             rawTime = stops[i];
             readTime = new Date(rawTime).toTimeString();
-            c3.innerHTML = "Lt " + lat.toString() + "<br>Ln " + lon.toString();
+            c3.innerHTML = "Lt " + lat.toString() + "<br>Ln " + lon.toString()+'<br>';
             c3.setAttribute("class", "timeEnt");
             c4.innerHTML = readTime;
             c4.setAttribute("class", "timeEnt");
