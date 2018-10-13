@@ -222,6 +222,7 @@ function genTable(state) {
         var row = table.insertRow(1);
         var c1 = row.insertCell(0);
         var c2 = row.insertCell(1);
+
         var rawTime = starts[starts.length - 1];
         var readTime = new Date(rawTime).toTimeString();
 

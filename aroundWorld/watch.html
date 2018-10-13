@@ -9,27 +9,30 @@
 </head>
 <body>
     <p><button id="perm" onclick="geoFindMe()">Get Location Permission</button></p>
-    <div id="out"></div>
-
-
-    <div id="showDiv">
-        <p><button onclick="startStop()">Start/Stop</button></p>
-        <!-- <p><button onclick="genTable()">Table Time</button></p> -->
+    <div class="content">
+         
+            <div id="out"></div>
+        
+        
+            <div id="showDiv">
+                <p><button onclick="startStop()">Start/Stop</button></p>
+                <!-- <p><button onclick="genTable()">Table Time</button></p> -->
+            </div>
+            <table class="myTable" id = "myTable" width = 100%>
+                <tr class="initRow" id="init">
+                    <td class="initRow">Start Position</td>
+                    <td class="initRow">Start Time</td>
+                    <td class="initRow">End Position</td>
+                    <td class="initRow">End Time</td>
+                    <td class="initRow">Time Delta</td>
+                </tr>
+            </table>
+            <!-- stretch goals are good -->
     </div>
-    <table id = "myTable" width = 100%>
-        <tr id="init">
-            <td>Start Position</td>
-            <td>Start Time</td>
-            <td>End Position</td>
-            <td>End Time</td>
-            <td>Time Delta</td>
-        </tr>
-    </table>
-    <!-- stretch goals are good -->
-    <p><button onclick="clearData()">Clear Data/Table</button></p>  
-
+    <p><button onclick="clearData()">Clear Data/Table</button></p>       
     <!-- this button is redundant but users would probably like the satisfaction -->
     <p><button onclick="saveOnClose()">Save Data</button></p>
+
     <!-- <p><button onclick="rebuildStart()">Reload Table</button></p> -->
     <!-- automatic reload works so this manual button is no longer needed -->
     
