@@ -1,4 +1,14 @@
 //https://www.clicktime.com/ctc/devintern.html
+/* 
+I used arrays for sake of simplicity in this prototype.
+Ideally a data structure would be better suited for the project and make the code cleaner
+    I was time constrained due to exams and valued a functioning prototype above the "perfect" prototype
+
+latitutde and longitutde arrays MUST be read in start/stop order when used
+    but this gets rid of an extra array
+
+state is a global var for the start/stop status of the start/stop button
+*/
 var starts = [];
 var stops = [];
 var lats = [];
@@ -6,17 +16,23 @@ var lons = [];
 var deltas = [];
 var state = "start";
 
-
+//jquery to check for page load, and handle all necssary behaviors
 $(document).ready(function(){
     // your code
-    $("#showDiv").hide();
+    $("#showDiv").hide();//intitially hide all other UI
+    //we dont want to show UI till we have user location permission
+    //otherwise we get bad data, even though the user may have internet connection
+    
     tableRebuild();
+    //once we have the basic permission for the app. call table rebuild to redisplay old data
+    //on permission click/grant show the UI
     $("#perm").click(function(){
-        alert("clicked intital perm");
+        // alert("clicked intital perm");
         $("#showDiv").show();
     });
 });
 
+//non jquery way to check for window exit/refresh and call our save fucntion automatically
 window.onbeforeunload = function(event) {
     // do something
     saveOnClose();
@@ -27,7 +43,7 @@ window.onbeforeunload = function(event) {
 
 
 
-
+//function ripped from API example from mozilla and "repurposed"
 function geoFindMe() {
     var output = document.getElementById("out");
   
@@ -58,6 +74,10 @@ function geoFindMe() {
     navigator.geolocation.getCurrentPosition(success, error);
   }
 
+
+  //functional "set time"
+  //checks global var state for start/stop state to see which action to perform
+  //like a real stopwatch
 function fsSetTime()
 {
     var d = new Date();
@@ -84,6 +104,8 @@ function fsSetTime()
     }
 }
 
+
+//parser to create a "usable" delta time for the user to read
 function parseMillisecondsIntoReadableTime(milliseconds){
     //Get hours from milliseconds
     var hours = milliseconds / (1000*60*60);
@@ -104,6 +126,7 @@ function parseMillisecondsIntoReadableTime(milliseconds){
     return h + ':' + m + ':' + s;
 }
 
+//calculating time deltas for the stretch goals based on UTC timestamps
 function getTdelta()
 {
     if(stops.length==starts.length)
@@ -117,11 +140,9 @@ function getTdelta()
         console.log(parseMillisecondsIntoReadableTime(t2-t1));
 
     }
-
-
 }
 
-
+//function to clear data locally, and the storage
 function clrTime()
 {
     starts=[];
@@ -133,24 +154,15 @@ function clrTime()
     delTable();
     alert("Local storage cleared");
 }
-function getLocal()
-{
-    var output = document.getElementById("myout");
 
-    var lat = localStorage.getItem("lat");
-    var lon = localStorage.getItem("lon");
-    output.innerHTML = '<p>Latitude is ' + lat + '° <br>Longitude is ' +lon+ '°</p>';
-
-}
-
+//simple subfunction to get rows of the table using jquery
 function getRows()
 {
     var totalRowCount = $("#myTable tr").length;
     return totalRowCount;
 }
 
-//TODO Fix position buffer to write for start and end
-//TODO fix position buffer so that I dont read null on table clear which creates errors
+//function used to generate table entries on stop/start clicks
 function genTable(state)
 {
     var table = document.getElementById("myTable");
@@ -216,6 +228,7 @@ function genTable(state)
     }
 }
 
+//taking reloaded data and rebuilding the data on the website for persistance
 function rebuildStart()
 {
     var table = document.getElementById("myTable");
@@ -263,7 +276,7 @@ function delTable() {
     state="start";
 }
 
-//TODO finish so that if data is loaded, rebuild table with said data
+//function to reload our data, and if the data is not "bad" we call our table rebuildStart
 function tableRebuild()
 {  
     var startTreload = localStorage.getItem("start");
@@ -308,7 +321,6 @@ function tableRebuild()
     {
         rebuildStart();
     }
-
     //if we have no positional data, poll for intial data to get permission, then clear the data to remove any bad data
 }
 
