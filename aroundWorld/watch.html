@@ -18,23 +18,29 @@
 
 </head>
 <body>
-    <p><button onclick="geoFindMe()">Get Location Permission</button></p>
+    <p><button id="perm" onclick="geoFindMe()">Get Location Permission</button></p>
     <div id="out"></div>
-    <p><button onclick="fsSetTime()">Start/Stop</button></p>
-    <!-- <p><button onclick="genTable()">Table Time</button></p> -->
 
-    <table id = "myTable" width = 100%>
-        <tr id="init">
-            <td>Start Position</td>
-            <td>Start Time</td>
-            <td>End Position</td>
-            <td>End Time</td>
-            <td>Time Delta</td>
-        </tr>
-    </table>
-    <p><button onclick="clrTime()">Clear Data/Table</button></p>  
-    <p><button onclick="saveOnClose()">Save Data</button></p>
-    <p><button onclick="rebuildStart()">Reload Table</button></p>
+
+    <div id="showDiv">
+        <p><button onclick="fsSetTime()">Start/Stop</button></p>
+        <!-- <p><button onclick="genTable()">Table Time</button></p> -->
+    
+        <table id = "myTable" width = 100%>
+            <tr id="init">
+                <td>Start Position</td>
+                <td>Start Time</td>
+                <td>End Position</td>
+                <td>End Time</td>
+                <td>Time Delta</td>
+            </tr>
+        </table>
+        <p><button onclick="clrTime()">Clear Data/Table</button></p>  
+        <p><button onclick="saveOnClose()">Save Data</button></p>
+        <p><button onclick="rebuildStart()">Reload Table</button></p>
+    
+
+    </div>
 
 
 

@@ -9,8 +9,13 @@ var state = "start";
 
 $(document).ready(function(){
     // your code
+    $("#showDiv").hide();
     tableRebuild();
+    $("#perm").click(function(){
+        alert("clicked intital perm");
+        $("#showDiv").show();
     });
+});
 
 window.onbeforeunload = function(event) {
     // do something
@@ -19,6 +24,8 @@ window.onbeforeunload = function(event) {
 
 // document.onload = tableRebuild();
 // window.onbeforeunload = saveOnClose();
+
+
 
 
 function geoFindMe() {
